@@ -80,3 +80,31 @@ models:
         description: Amount of the order (AUD) paid for by gift card
         tests:
           - not_null
+
+  - name: customers_metrics
+    description: "Aggregated table containing all lifetime metrics for each customer, derived by joining the customers and orders tables."
+    config:
+      materialized: table
+    
+    columns:
+      - name: customer_id
+        description: The unique identifier for the customer (Primary Key).
+        tests:
+          - unique
+          - not_null
+      
+      - name: first_name
+        description: The customer's first name.
+
+      - name: last_name
+        description: The customer's last name.
+      
+      - name: lifetime_orders
+        description: The total count of orders placed by this customer.
+        tests:
+          - not_null
+      
+      - name: lifetime_spend
+        description: The total amount spent by this customer across all orders (in cents).
+        tests:
+          - not_null
