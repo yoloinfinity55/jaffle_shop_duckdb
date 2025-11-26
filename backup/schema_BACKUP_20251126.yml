@@ -87,24 +87,24 @@ models:
       materialized: table
     
     columns:
-      - name: CUSTOMER_ID
+      - name: customer_id
         description: The unique identifier for the customer (Primary Key).
         tests:
           - unique
           - not_null
       
-      - name: FIRST_NAME
+      - name: first_name
         description: The customer's first name.
 
-      - name: LAST_NAME
+      - name: last_name
         description: The customer's last name.
       
-      - name: TOTAL_ORDERS
+      - name: lifetime_orders
         description: The total count of orders placed by this customer.
         tests:
           - not_null
       
-      - name: LIFETIME_SPEND_PLACEHOLDER
+      - name: lifetime_spend
         description: The total amount spent by this customer across all orders (in cents).
         tests:
           - not_null

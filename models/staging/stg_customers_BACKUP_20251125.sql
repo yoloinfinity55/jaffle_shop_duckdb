@@ -12,8 +12,8 @@ renamed as (
 
     select
         id as customer_id,
-        {{ clean_string('first_name') }} as first_name,
-        {{ clean_string('last_name') }} as last_name
+        first_name,
+        last_name
 
     from source
 

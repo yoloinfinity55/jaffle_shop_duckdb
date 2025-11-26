@@ -1,15 +1,22 @@
-SELECT
-    -- Select key customer attributes
-    c.customer_id,
-    c.first_name,
-    c.last_name,
+-- models/customers_metrics.sql
 
-    -- Calculate lifetime metrics (using the 'orders' model)
-    COUNT(o.order_id) AS lifetime_orders,
-    SUM(o.amount) AS lifetime_spend
-    
-FROM {{ ref('customers') }} c  -- Reference the 'customers' model
-LEFT JOIN {{ ref('orders') }} o  -- Reference the 'orders' model
-    ON c.customer_id = o.customer_id
-GROUP BY 1, 2, 3
-ORDER BY lifetime_spend DESC
+with base as (
+        select * from {{ ref('int_orders_with_customers') }}
+),
+
+add_first_order_date as (
+    select *,
+    min(order_date) over (partition by customer_id) as first_order_date
+    from base
+),
+
+customer_aggregate as (
+    select customer_id,
+    first_order_date,
+    count(order_id)  as total_orders,
+    sum(10) as lifetime_spend_placeholder
+    from add_first_order_date
+    group by 1,2
+)
+
+select * from customer_aggregate

@@ -25,10 +25,14 @@ seeds:
 
 models:
   jaffle_shop:
+    +schema: analytics
     +materialized: table
+
+    intermediate:
+      +schema: intermediate
+      +materialized: table
+
     staging:
+      +schema: raw
       +materialized: view
-      +docs:
-        node_color: 'silver'
-    +docs:
-      node_color: 'gold'
+
